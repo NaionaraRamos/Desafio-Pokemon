@@ -36,3 +36,22 @@
     transform: rotate(360deg);
   }
 }
+
+#logo {
+  height: 140px;
+}
+
+#logo2 {
+  height: 100px;
+}
+
+#search-icon {
+  margin-top: 10px;
+  font-size: 2.0rem;
+}
+
+.paginacao {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
