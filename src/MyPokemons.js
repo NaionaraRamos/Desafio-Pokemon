@@ -58,10 +58,10 @@ const MyPokemons = props => {
         return (
             <Grid item xs= {4} key={pokemonId}>
                 <Card>
-                    <CardMedia onClick = {() => history.push(`/${pokemonId}`)} className={classes.cardMedia }
+                    <CardMedia onClick = {() => history.push(`/${id}`)} className={classes.cardMedia }
                     image={sprite}
                     style= {{ width: "130px", height: "130px"}} />
-                    <CardContent onClick = {() => history.push(`/${pokemonId}`)} className={classes.CardContent}>
+                    <CardContent onClick = {() => history.push(`/${id}`)} className={classes.CardContent}>
                         <Typography>{`${id}. ${toFirstCharUpperCase(name)}`}</Typography>
                     </CardContent>
                     <Button color="primary" variant="contained" onClick={release(myPokemons[pokemonId])}>-</Button>
