@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-//import mockData from './mockData';
 import { Typography, Link, CircularProgress } from '@material-ui/core';
 import { toFirstCharUpperCase } from './constant';
 import axios from 'axios';

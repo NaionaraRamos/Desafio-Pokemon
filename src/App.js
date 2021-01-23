@@ -1,5 +1,5 @@
 //import logo from './logo.svg';
-import './App.css';
+/*import './App.css';
 import Pokemon from './Pokemon';
 import Pokedex from './Pokedex';
 import mockData from './mockData';
@@ -14,6 +14,30 @@ function App() {
         path="/:pokemonId"
         render={(props) => <Pokemon {...props} />} 
       />
+    </Switch>
+  );
+}
+
+export default App; */
+
+//import logo from './logo.svg';
+import './App.css';
+import Pokemon from './Pokemon';
+import Pokedex from './Pokedex';
+import MyPokemons from './MyPokemons';
+import { Route, Switch } from 'react-router-dom';
+
+function App() {
+  return (
+    <Switch>
+      <Route exact path="/" render = {(props) => <Pokedex {...props} />} />
+      <Route exact path="/mypokemons" render = {(props) => <MyPokemons {...props} />} />
+      <Route
+        exact
+        path="/:pokemonId"
+        render={(props) => <Pokemon {...props} />} 
+      />
+      
     </Switch>
   );
 }
