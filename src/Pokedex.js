@@ -45,8 +45,9 @@ const Pokedex = props => {
     const [ currentPageUrl, setCurrentPageUrl ] = useState('https://pokeapi.co/api/v2/pokemon');
     const [ previousPageUrl, setPreviousPageUrl ] = useState();
     const [ nextPageUrl, setNextPageUrl ] = useState();
+    const [ currentPageNumber, setCurrentPageNumber ] = useState(0);
     const [ loading, setLoading ] = useState(true);
-
+    
     //Recuperando do storage os pokemons capturados
     let newMyPokemons = []
     if(localStorage.getItem('myPokemons') !== null && newMyPokemons.length == 0){
@@ -74,17 +75,18 @@ const Pokedex = props => {
             .get(currentPageUrl)
             .then(function(response){
                 const { data } = response;
-                const { results } = data;
+                const { results } = data;                              
                 setLoading(false)
                 setPreviousPageUrl(response.data.previous)
                 setNextPageUrl(response.data.next)
                 const newPokemonData = {};
                 results.forEach((pokemon, index) => {
-                    if(keepPokemon(index + 1)){
-                        newPokemonData[index + 1] = {
-                            id: index + 1,
+                    let indice = index + 1 + (currentPageNumber * 20);
+                    if(keepPokemon(indice)){
+                        newPokemonData[indice] = {
+                            id: indice,
                             name: pokemon.name,
-                            sprite: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${index + 1}.png`
+                            sprite: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${index + 1 + (currentPageNumber * 20)}.png`
                         };
                     }
                 });
@@ -124,8 +126,6 @@ const Pokedex = props => {
         );
     };
 
-
-
     const removePokemonFromList = (removedPokemon) =>
         Object.values(pokemonData).filter(pokemon => pokemon !== removedPokemon);
 
@@ -135,6 +135,20 @@ const Pokedex = props => {
         localStorage.setItem('myPokemons', JSON.stringify(newMyPokemons));
         setPokemonData(removePokemonFromList(pokemon));
     }; 
+
+    const paginate = (page) => {
+        console.log(page);
+        if( page === "next" ){    
+            const number = currentPageNumber;        
+            setCurrentPageNumber(number+1);
+            setCurrentPageUrl(nextPageUrl);            
+        }
+        if( page === "previous" ) {
+            const number = currentPageNumber;        
+            setCurrentPageNumber(number-1);
+            setCurrentPageUrl(previousPageUrl);
+        }       
+    }    
 
     return (
       <>
@@ -168,7 +182,8 @@ const Pokedex = props => {
         <Pagination 
             nextPage = { nextPageUrl ? nextPage : null }
             previousPage = { previousPageUrl ? previousPage : null }
-            />
+            paginate = { paginate }
+        />        
       </>
     )
 }
